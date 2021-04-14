@@ -1,0 +1,6 @@
+﻿  main.cpp
+c:\users\maxen\onedrive\bureau\travail providence\gremont\template\templatesfml_vscommunity2017-main\main.cpp(8): error C2144: erreur de syntaxe : 'int' doit être précédé de ';'
+c:\users\maxen\onedrive\bureau\travail providence\gremont\template\templatesfml_vscommunity2017-main\main.cpp(42): error C2065: 'ecran' : identificateur non déclaré
+c:\users\maxen\onedrive\bureau\travail providence\gremont\template\templatesfml_vscommunity2017-main\main.cpp(47): error C2065: 'ecran' : identificateur non déclaré
+c:\users\maxen\onedrive\bureau\travail providence\gremont\template\templatesfml_vscommunity2017-main\main.cpp(47): error C3861: 'editeur' : identificateur introuvable
+c:\users\maxen\onedrive\bureau\travail providence\gremont\template\templatesfml_vscommunity2017-main\main.cpp(13): warning C4390: ';' : une instruction contrôlée a été trouvée vide ; est-ce ce que vous souhaitiez ?
