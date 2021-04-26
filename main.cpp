@@ -1,12 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
 #include "constantes.h"
 #include "jeu.h"
 #include "editeur.h"
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
+	*ecran = NULL;
+
 	//Texture du menu
 	sf::RenderWindow window{sf::VideoMode(800, 600), "My window de BG"};
 	sf::Texture texture;
@@ -19,6 +22,8 @@ int main(int argc, char **argv)
 	sf::Event event;
 
 	sf::VideoMode::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32);
+
+	ecran = sf::VideoMode::getDesktopMode();
 
 	// on fait tourner le programme jusqu'à ce que la fenêtre soit fermée
 	while (window.isOpen())
@@ -36,12 +41,12 @@ int main(int argc, char **argv)
 			}
 			else if(event.type == sf::Event::KeyPressed)
 			{
-				if (event.key.code == sf::Keyboard::Numpad1 || event.key.code == sf::Keyboard::Num1)
+				if (event.key.code == sf::Keyboard::Numpad1 || event.key.code == sf::Keyboard::Num1) //Ajout du 1 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers la page de jeu
 					jouer(ecran);
 				}
-				else if (event.key.code == sf::Keyboard::Numpad2 || event.key.code == sf::Keyboard::Num2)
+				else if (event.key.code == sf::Keyboard::Numpad2 || event.key.code == sf::Keyboard::Num2) //Ajout du 2 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers l'editeur de niveau
 					editeur(ecran);
