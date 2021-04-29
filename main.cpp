@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <fstream>
+using namespace std;
 
 #include "constantes.h"
 #include "jeu.h"
@@ -8,12 +10,13 @@
 
 int main(int argc, char *argv[])
 {
-	*ecran = NULL;
-
 	//Texture du menu
-	sf::RenderWindow window{sf::VideoMode(800, 600), "My window de BG"};
+	sf::RenderWindow window{sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "My window de BG"};
 	sf::Texture texture;
-	if(!texture.loadFromFile("image/menu.jpg"));
+	if (!texture.loadFromFile("image/menu.jpg"))
+	{
+		cout << "L'image du menu n'a pas chargé";
+	}
 
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
@@ -21,9 +24,8 @@ int main(int argc, char *argv[])
 	//Event pour naviguer entre les options
 	sf::Event event;
 
-	sf::VideoMode::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32);
+	//sf::VideoMode::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32);
 
-	ecran = sf::VideoMode::getDesktopMode();
 
 	// on fait tourner le programme jusqu'à ce que la fenêtre soit fermée
 	while (window.isOpen())
@@ -44,12 +46,12 @@ int main(int argc, char *argv[])
 				if (event.key.code == sf::Keyboard::Numpad1 || event.key.code == sf::Keyboard::Num1) //Ajout du 1 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers la page de jeu
-					jouer(ecran);
+					jouer(window);
 				}
 				else if (event.key.code == sf::Keyboard::Numpad2 || event.key.code == sf::Keyboard::Num2) //Ajout du 2 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers l'editeur de niveau
-					editeur(ecran);
+					editeur(window);
 				}
 			}
 		}

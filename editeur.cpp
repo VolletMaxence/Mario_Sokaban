@@ -3,15 +3,16 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
 #include "constantes.h"
 #include "editeur.h"
 #include "fichiers.h"
 
-void editeur(SDL_Surface* ecran)
+void editeur(sf::RenderWindow window)
 {
-	sf::Sprite *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
+	sf::Sprite * mur = NULL, * caisse = NULL, * objectif = NULL, * mario = NULL;
 	SDL_Rect position;
 	sf::Event event;
 

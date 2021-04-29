@@ -3,13 +3,16 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
 #include "constantes.h"
 #include "jeu.h"
 
-void jouer(ecran)
+void jouer(sf::RenderWindow window)
 {
+	sf::RenderWindow window{ sf::VideoMode(800, 600), "My window de BG" };
+
 	sf::Sprite *mario[4] = { NULL }; // 4 surfaces pour chacune des directions de mario
 	sf::Sprite *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL;
 	SDL_Rect position, positionJoueur;
@@ -20,28 +23,52 @@ void jouer(ecran)
 
 	// Chargement des sprites (décors, personnage...)
 	sf::Texture mur;
-	if (!texture.loadFromFile("image/mur.jpg"));
+	if (!texture.loadFromFile("image/mur.jpg"))
+	{
+		cout << "L'image des murs n'ont pas chargé";
+	}
 
 	sf::Texture caisse;
-	if (!texture.loadFromFile("image/caisse.jpg"));
+	if (!texture.loadFromFile("image/caisse.jpg"))
+	{
+		cout << "L'image des caisses n'ont pas chargé";
+	}
 
 	sf::Texture caisseOK;
-	if (!texture.loadFromFile("image/caisse_ok.jpg"));
+	if (!texture.loadFromFile("image/caisse_ok.jpg"))
+	{
+		cout << "L'image des caisses OK n'ont pas chargé";
+	}
 
 	sf::Texture objectif;
-	if (!texture.loadFromFile("image/objectif.png"));
+	if (!texture.loadFromFile("image/objectif.png"))
+	{
+		cout << "L'image des objectifs n'ont pas chargé";
+	}
 
 	sf::Texture mario[BAS];
-	if (!texture.loadFromFile("image/mario_bas.gif"));
+	if (!texture.loadFromFile("image/mario_bas.gif"))
+	{
+		cout << "L'image de Mario Bas n'a pas chargé";
+	}
 
 	sf::Texture mario[GAUCHE];
-	if (!texture.loadFromFile("image/mario_gauche.gif"));
+	if (!texture.loadFromFile("image/mario_gauche.gif"))
+	{
+		cout << "L'image de Mario Gauche n'a pas chargé";
+	}
 
 	sf::Texture mario[HAUT];
-	if (!texture.loadFromFile("image/mario_haut.gif"));
+	if (!texture.loadFromFile("image/mario_haut.gif"))
+	{
+		cout << "L'image de Mario haut n'a pas chargé";
+	}
 
 	sf::Texture mario[DROITE];
-	if (!texture.loadFromFile("image/mario_droite.gif"));
+	if (!texture.loadFromFile("image/mario_droite.gif"))
+	{
+		cout << "L'image de Mario droite n'a pas chargé";
+	}
 
 
 	marioActuel = mario[BAS]; // Mario sera dirigé vers le bas au départ
@@ -64,6 +91,7 @@ void jouer(ecran)
 		}
 	}
 
+	//Si besoin, mettre le fait de laisser les touche enfoncer pour bouger
 
 	while (window.isOpen())
 	{
@@ -128,6 +156,9 @@ void jouer(ecran)
 					break;
 				}
 			}
+
+			sf::Sprite::setTextureRect()
+
 		}
 
 		// Si on n'a trouvé aucun objectif sur la carte, c'est qu'on a gagné
