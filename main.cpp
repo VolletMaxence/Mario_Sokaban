@@ -8,10 +8,15 @@ using namespace std;
 #include "jeu.h"
 #include "editeur.h"
 
+
+void ecran (sf::RenderWindow& window){window.create(sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "My window de BG");}
+
 int main(int argc, char *argv[])
 {
+	sf::RenderWindow window;
+	ecran(window);
+
 	//Texture du menu
-	sf::RenderWindow window{sf::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE), "My window de BG"};
 	sf::Texture texture;
 	if (!texture.loadFromFile("image/menu.jpg"))
 	{
@@ -24,7 +29,7 @@ int main(int argc, char *argv[])
 	//Event pour naviguer entre les options
 	sf::Event event;
 
-	//sf::VideoMode::VideoMode(LARGEUR_FENETRE, HAUTEUR_FENETRE, 32);
+	//sf::RenderWindow ecran (sf::RenderWindow& window){ return window };
 
 
 	// on fait tourner le programme jusqu'à ce que la fenêtre soit fermée
@@ -46,16 +51,15 @@ int main(int argc, char *argv[])
 				if (event.key.code == sf::Keyboard::Numpad1 || event.key.code == sf::Keyboard::Num1) //Ajout du 1 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers la page de jeu
-					jouer(window);
+					jouer(ecran);
 				}
 				else if (event.key.code == sf::Keyboard::Numpad2 || event.key.code == sf::Keyboard::Num2) //Ajout du 2 de la barre pour les joueurs sans pad
 				{
 					//Envoie vers l'editeur de niveau
-					editeur(window);
+					editeur(ecran);
 				}
 			}
 		}
-
 		window.display();
 	}
 
