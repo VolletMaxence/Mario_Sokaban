@@ -9,7 +9,7 @@
 #include "constantes.h"
 #include "jeu.h"
 
-void jouer(sf::RenderWindow window)
+void jouer(sf::RenderWindow& window)
 {
 	sf::RenderWindow window{ sf::VideoMode(800, 600), "My window de BG" };
 
@@ -100,7 +100,7 @@ void jouer(sf::RenderWindow window)
 		case SDL_QUIT:
 			continuer = 0;
 			break;
-		case sf::Event::KeyPressed:
+		case sf::Event::KeyPressed :
 			switch (event.key.code)
 			{
 			case sf::Keyboard::isKeyPressed(sf::Keyboard::Escape):
@@ -176,7 +176,7 @@ void jouer(sf::RenderWindow window)
 	}
 
 	// Désactivation de la répétition des touches (remise à 0)
-	SDL_EnableKeyRepeat(0, 0);
+	//SDL_EnableKeyRepeat(0, 0);
 
 	// Libération des surfaces chargées
 	SDL_FreeSurface(mur);

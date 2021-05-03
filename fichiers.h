@@ -1,7 +1,9 @@
-#ifndef DEF_FICHIERS
-#define DEF_FICHIERS
+#pragma once
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include "constantes.h"
 
 int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR]);
 int sauvegarderNiveau(int niveau[][NB_BLOCS_HAUTEUR]);
 
-#endif#pragma once
