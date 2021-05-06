@@ -9,6 +9,9 @@
 
 void editeur(sf::RenderWindow* window)
 {
+	window->clear(sf::Color::Black);
+	window->display();
+
 	sf::Sprite* mur = NULL, * caisse = NULL, * objectif = NULL, * mario = NULL;
 	sf::Event event;
 

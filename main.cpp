@@ -26,6 +26,7 @@ int main(int argc, char **argv[])
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 
+	sprite.setPosition(sf::Vector2f(0.f, 0.f));
 
 	// on fait tourner le programme jusqu'à ce que la fenêtre soit fermée
 	while (window.isOpen())
@@ -60,6 +61,7 @@ int main(int argc, char **argv[])
 				}
 			}
 		}
+		window.clear(sf::Color::Black);
 		window.draw(sprite);
 		window.display();
 	}

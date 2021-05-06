@@ -16,7 +16,7 @@ void jouer(sf::RenderWindow& window)
 	sf::Sprite *mario[4] = { NULL }; // 4 surfaces pour chacune des directions de mario
 	sf::Sprite *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL;
 	SDL_Rect position, positionJoueur;
-	sf::Event event;
+	sf::Event event; 
 
 	int continuer = 1, objectifsRestants = 0, i = 0, j = 0;
 	int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = { 0 };
@@ -95,39 +95,48 @@ void jouer(sf::RenderWindow& window)
 
 	while (window.isOpen())
 	{
-		switch (event.type)
+		sf::Event event;
+
+		while (window.pollEvent(event))
 		{
-		case SDL_QUIT:
-			continuer = 0;
-			break;
-		case sf::Event::KeyPressed :
-			switch (event.key.code)
+			if (event.type == sf::Event::Closed)
 			{
-			case sf::Keyboard::isKeyPressed(sf::Keyboard::Escape):
-				continuer = 0;
-				break;
-			case sf::Keyboard::isKeyPressed(sf::Keyboard::Up) :
-				marioActuel = mario[HAUT];
-				deplacerJoueur(carte, &positionJoueur, HAUT);
-				break;
-			case sf::Keyboard::isKeyPressed(sf::Keyboard::Down):
-				marioActuel = mario[BAS];
-				deplacerJoueur(carte, &positionJoueur, BAS);
-				break;
-			case sf::Keyboard::isKeyPressed(sf::Keyboard::Right):
-				marioActuel = mario[DROITE];
-				deplacerJoueur(carte, &positionJoueur, DROITE);
-				break;
-			case sf::Keyboard::isKeyPressed(sf::Keyboard::Left):
-				marioActuel = mario[GAUCHE];
-				deplacerJoueur(carte, &positionJoueur, GAUCHE);
-				break;
+				window.close();
+			}
+			if (sf::Event::KeyPressed) 
+			{
+				switch (event.key.code)
+				{
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)
+					{
+						continuer = 0;
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+					{
+						marioActuel = mario[HAUT];
+						deplacerJoueur(carte, &positionJoueur, HAUT);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)
+					{
+						marioActuel = mario[BAS];
+						deplacerJoueur(carte, &positionJoueur, BAS);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)
+					{
+						marioActuel = mario[DROITE];
+						deplacerJoueur(carte, &positionJoueur, DROITE);
+					}
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+					{
+						marioActuel = mario[GAUCHE];
+						deplacerJoueur(carte, &positionJoueur, GAUCHE);
+					}
 			}
 			break;
 		}
 
 		// Effacement de l'écran
-		SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 255, 255, 255));
+		SDL_FillRect(window, NULL, SDL_MapRGB(window->format, 255, 255, 255));
 
 		// Placement des objets à l'écran
 		objectifsRestants = 0;
@@ -142,16 +151,16 @@ void jouer(sf::RenderWindow& window)
 				switch (carte[i][j])
 				{
 				case MUR:
-					SDL_BlitSurface(mur, NULL, ecran, &position);
+					sprite.setTexture(mur);
 					break;
 				case CAISSE:
-					SDL_BlitSurface(caisse, NULL, ecran, &position);
+					sprite.setTexture(caisse);
 					break;
 				case CAISSE_OK:
-					SDL_BlitSurface(caisseOK, NULL, ecran, &position);
+					sprite.setTexture(caisseOK);
 					break;
 				case OBJECTIF:
-					SDL_BlitSurface(objectif, NULL, ecran, &position);
+					sprite.setTexture(objectif);
 					objectifsRestants = 1;
 					break;
 				}
@@ -168,7 +177,7 @@ void jouer(sf::RenderWindow& window)
 		// On place le joueur à la bonne position
 		position.x = positionJoueur.x * TAILLE_BLOC;
 		position.y = positionJoueur.y * TAILLE_BLOC;
-		SDL_BlitSurface(marioActuel, NULL, ecran, &position);
+		sprite.setTexture(marioActuel);
 
 
 
@@ -179,12 +188,12 @@ void jouer(sf::RenderWindow& window)
 	//SDL_EnableKeyRepeat(0, 0);
 
 	// Libération des surfaces chargées
-	SDL_FreeSurface(mur);
-	SDL_FreeSurface(caisse);
-	SDL_FreeSurface(caisseOK);
-	SDL_FreeSurface(objectif);
-	for (i = 0; i < 4; i++)
-		SDL_FreeSurface(mario[i]);
+	//SDL_FreeSurface(mur);
+	//SDL_FreeSurface(caisse);
+	//SDL_FreeSurface(caisseOK);
+	//SDL_FreeSurface(objectif);
+	//for (i = 0; i < 4; i++)
+		//SDL_FreeSurface(mario[i]);
 }
 
 void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SDL_Rect *pos, int direction)
@@ -206,7 +215,7 @@ void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SDL_Rect *pos, int direction)
 		// On vérifie d'abord s'il y a une caisse à déplacer
 		deplacerCaisse(&carte[pos->x][pos->y - 1], &carte[pos->x][pos->y - 2]);
 
-		pos->y--; // On peut enfin faire monter le joueur (oufff !)
+		pos->y--;
 		break;
 
 
@@ -217,8 +226,7 @@ void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SDL_Rect *pos, int direction)
 			break;
 
 		if ((carte[pos->x][pos->y + 1] == CAISSE || carte[pos->x][pos->y + 1] == CAISSE_OK) &&
-			(pos->y + 2 >= NB_BLOCS_HAUTEUR || carte[pos->x][pos->y + 2] == MUR ||
-				carte[pos->x][pos->y + 2] == CAISSE || carte[pos->x][pos->y + 2] == CAISSE_OK))
+			(pos->y + 2 >= NB_BLOCS_HAUTEUR || carte[pos->x][pos->y + 2] == MUR || carte[pos->x][pos->y + 2] == CAISSE || carte[pos->x][pos->y + 2] == CAISSE_OK))
 			break;
 
 
@@ -235,8 +243,7 @@ void deplacerJoueur(int carte[][NB_BLOCS_HAUTEUR], SDL_Rect *pos, int direction)
 			break;
 
 		if ((carte[pos->x - 1][pos->y] == CAISSE || carte[pos->x - 1][pos->y] == CAISSE_OK) &&
-			(pos->x - 2 < 0 || carte[pos->x - 2][pos->y] == MUR ||
-				carte[pos->x - 2][pos->y] == CAISSE || carte[pos->x - 2][pos->y] == CAISSE_OK))
+			(pos->x - 2 < 0 || carte[pos->x - 2][pos->y] == MUR || carte[pos->x - 2][pos->y] == CAISSE || carte[pos->x - 2][pos->y] == CAISSE_OK))
 			break;
 
 
