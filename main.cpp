@@ -4,9 +4,10 @@
 #include <iostream>
 
 #include "constantes.h"
-#include "jeu.h"
 #include "editeur.h"
 #include "fichiers.h"
+//#include "jeu.h"
+
 
 
 
@@ -26,7 +27,6 @@ int main(int argc, char **argv[])
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 
-	sprite.setPosition(sf::Vector2f(0.f, 0.f));
 
 	// on fait tourner le programme jusqu'à ce que la fenêtre soit fermée
 	while (window.isOpen())

@@ -1,7 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdio.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+//#include <SDL/SDL.h>
+//#include <SDL/SDL_image.h>
+
+
 
 #include "constantes.h"
 #include "fichiers.h"

@@ -1,104 +1,150 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <iostream>
 
 #include "constantes.h"
 #include "editeur.h"
 #include "fichiers.h"
 
+
 void editeur(sf::RenderWindow* window)
 {
-	window->clear(sf::Color::Black);
-	window->display();
+	using namespace std;
 
-	sf::Sprite* mur = NULL, * caisse = NULL, * objectif = NULL, * mario = NULL;
-	sf::Event event;
+	sf::Sprite vide, mur, caisse, caisseOK, objectif, mario;
+	sf::Sprite *TotalSprite[6] = { &vide, &mur, &caisse, &caisseOK, &objectif, &mario };
+
 
 	int continuer = 1, clicGaucheEnCours = 0, clicDroitEnCours = 0;
 	int objetActuel = MUR, i = 0, j = 0;
 	int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = { 0 };
 
 	// Chargement des objets et du niveau
+	sf::Sprite vide;
+	sf::Texture Tvide;
+	if (!Tvide.loadFromFile("image/vide.jpg"))
+	{
+		cout << "L'image du vide n'a pas chargé";
+	}
+	vide.setTexture(Tvide);
+
 	sf::Texture Tmur;
-	texture.loadFromFile("image/mur.jpg");
-	mur = new sf::Sprite(Tmur)
+	if (!Tmur.loadFromFile("image/mur.jpg"))
+	{
+		cout << "L'image du mur n'a pas chargé";
+	}
+	mur.setTexture(Tmur);
 
 	sf::Texture Tcaisse;
-	texture.loadFromFile("image/caisse.jpg");
-	caisse = new sf::Sprite(Tcaisse)
+	if (!Tcaisse.loadFromFile("image/caisse.jpg"))
+	{
+		cout << "L'image de la caisse n'a pas chargé";
+	}
+	caisse.setTexture(Tcaisse);
 
 	sf::Texture Tobjectif;
-	texture.loadFromFile("image/objectif.png");
-	objectif = new sf::Sprite(Tobjectif)
+	if (!Tobjectif.loadFromFile("image/objectif.png"))
+	{
+		cout << "L'image de l'objectif n'a pas chargé";
+
+	}
+	objectif.setTexture(Tobjectif);
+
+	sf::Texture TcaisseOK;
+	if (!Tobjectif.loadFromFile("image/caisse_OK.png"))
+	{
+		cout << "L'image de l'caisseOK n'a pas chargé";
+
+	}
+	caisseOK.setTexture(TcaisseOK);
 
 	sf::Texture Tmario;
-	texture.loadFromFile("image/mario_bas.gif");
-	mario = new sf::Sprite(Tmario)
+	if(!Tmario.loadFromFile("image/mario_bas.gif"))
+	{
+		cout << "L'image de Mario n'a pas chargé";
+	}
+	mario.setTexture(Tmario);
 
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
+	//Touche pour les differents éléments
+	while(continuer==1)
 	{
-		objetActuel = MUR;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
-	{
-		objetActuel = CAISSE;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
-	{
-		objetActuel = OBJECTIF;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
-	{
-		objetActuel = MARIO;
-	}
-	//Pour que le joueur puisse quand meme jouer si son clavier n'a pas de pad : 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
-	{
-		objetActuel = MUR;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
-	{
-		objetActuel = CAISSE;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
-	{
-		objetActuel = OBJECTIF;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4))
-	{
-		objetActuel = MARIO;
-	}
+		sf::Event event;
+		while (window->pollEvent(event))
+		{
+			sf::Sprite objetActuel;
+
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
+			{
+				objetActuel.setTexture(Tmur);
+			}
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
+			{
+				objetActuel.setTexture(Tcaisse);
+			}
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
+			{
+				objetActuel.setTexture(Tobjectif);
+			}
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
+			{
+				objetActuel.setTexture(Tmario);
+			}
+
+			
+			//Sauvegarde et chargement du niveau
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				continuer = 0;
+			}
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				sauvegarderNiveau(carte);
+				continuer = 0;
+			}
+			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+			{
+				chargerNiveau(carte);
+			}
+
+		}
+
+		//Placement objet
+		sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+		sf::FloatRect Position;
+		for (int ligne = 0; ligne < NB_BLOCS_LARGEUR; ligne++) {
+			for (int colonne = 0; colonne < NB_BLOCS_HAUTEUR; colonne++) 
+			{
+				int x = mousePosition.x / TAILLE_BLOC;
+				int y = mousePosition.y / TAILLE_BLOC;
+				Position.top = colonne * TAILLE_BLOC;
+				Position.left = ligne * TAILLE_BLOC;
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
+				{
+					carte[x][y] = objetActuel;
+				}
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+				{
+					carte[x][y] = vide;
+				}
+				sf::Sprite* sprite = TotalSprite[carte[ligne][colonne]];
+				sprite->setPosition(Position.left, Position.top);
+				window->draw(*sprite);
+			}
+		}
+
+		
+		window->draw(caisse);
+		window->draw(caisseOK);
+		window->draw(mur);
+		window->draw(objectif);
+		window->draw(mario);
+		
 
 
-	//Placement objet
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
-	int x = mousePosition.x / TAILLE_BLOC;
-	int y = mousePosition.y / TAILLE_BLOC;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		carte[x][y] = objetActuel;
+		window->display();
 	}
+	
 
-	//Retirer objet
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
-	int x = mousePosition.x / TAILLE_BLOC;
-	int y = mousePosition.y / TAILLE_BLOC;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-		carte[x][y] = VIDE;
-	}
-
-	//Sauvegarde et chargement du niveau
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-	{
-		continuer = 0;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		sauvegarderNiveau(carte);
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
-	{
-		chargerNiveau(carte);
-	}
 }

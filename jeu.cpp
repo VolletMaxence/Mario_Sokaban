@@ -1,7 +1,7 @@
-#include <stdlib.h>
+/*#include <stdlib.h>
 #include <stdio.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+//#include <SDL/SDL.h>
+//#include <SDL/SDL_image.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
@@ -9,7 +9,7 @@
 #include "constantes.h"
 #include "jeu.h"
 
-void jouer(sf::RenderWindow& window)
+void jouer(sf::RenderWindow* window)
 {
 	sf::RenderWindow window{ sf::VideoMode(800, 600), "My window de BG" };
 
@@ -23,49 +23,49 @@ void jouer(sf::RenderWindow& window)
 
 	// Chargement des sprites (décors, personnage...)
 	sf::Texture mur;
-	if (!texture.loadFromFile("image/mur.jpg"))
+	if (!mur.loadFromFile("image/mur.jpg"))
 	{
 		cout << "L'image des murs n'ont pas chargé";
 	}
 
 	sf::Texture caisse;
-	if (!texture.loadFromFile("image/caisse.jpg"))
+	if (!caisse.loadFromFile("image/caisse.jpg"))
 	{
 		cout << "L'image des caisses n'ont pas chargé";
 	}
 
 	sf::Texture caisseOK;
-	if (!texture.loadFromFile("image/caisse_ok.jpg"))
+	if (!caisseOK.loadFromFile("image/caisse_ok.jpg"))
 	{
 		cout << "L'image des caisses OK n'ont pas chargé";
 	}
 
 	sf::Texture objectif;
-	if (!texture.loadFromFile("image/objectif.png"))
+	if (!objectif.loadFromFile("image/objectif.png"))
 	{
 		cout << "L'image des objectifs n'ont pas chargé";
 	}
 
 	sf::Texture mario[BAS];
-	if (!texture.loadFromFile("image/mario_bas.gif"))
+	if (!mario[BAS].loadFromFile("image/mario_bas.gif"))
 	{
 		cout << "L'image de Mario Bas n'a pas chargé";
 	}
 
 	sf::Texture mario[GAUCHE];
-	if (!texture.loadFromFile("image/mario_gauche.gif"))
+	if (!mario[GAUCHE].loadFromFile("image/mario_gauche.gif"))
 	{
 		cout << "L'image de Mario Gauche n'a pas chargé";
 	}
 
 	sf::Texture mario[HAUT];
-	if (!texture.loadFromFile("image/mario_haut.gif"))
+	if (!mario[HAUT].loadFromFile("image/mario_haut.gif"))
 	{
 		cout << "L'image de Mario haut n'a pas chargé";
 	}
 
 	sf::Texture mario[DROITE];
-	if (!texture.loadFromFile("image/mario_droite.gif"))
+	if (!mario[DROITE].loadFromFile("image/mario_droite.gif"))
 	{
 		cout << "L'image de Mario droite n'a pas chargé";
 	}
@@ -287,3 +287,4 @@ void deplacerCaisse(int *premiereCase, int *secondeCase)
 	}
 }
 
+*/
