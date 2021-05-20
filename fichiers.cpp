@@ -66,7 +66,6 @@ int sauvegarderNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 			fprintf(fichier, "%d", niveau[j][i]);
 		}
 	}
-
 	fclose(fichier);
 	return 1;
 }

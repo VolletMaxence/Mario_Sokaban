@@ -21,9 +21,8 @@ void editeur(sf::RenderWindow* window)
 	int carte[NB_BLOCS_LARGEUR][NB_BLOCS_HAUTEUR] = { 0 };
 
 	// Chargement des objets et du niveau
-	sf::Sprite vide;
 	sf::Texture Tvide;
-	if (!Tvide.loadFromFile("image/vide.jpg"))
+	if (!Tvide.loadFromFile("image/vide.png"))
 	{
 		cout << "L'image du vide n'a pas chargé";
 	}
@@ -34,7 +33,7 @@ void editeur(sf::RenderWindow* window)
 	{
 		cout << "L'image du mur n'a pas chargé";
 	}
-	mur.setTexture(Tmur);
+	mur.setTexture(Tmur); 
 
 	sf::Texture Tcaisse;
 	if (!Tcaisse.loadFromFile("image/caisse.jpg"))
@@ -52,9 +51,9 @@ void editeur(sf::RenderWindow* window)
 	objectif.setTexture(Tobjectif);
 
 	sf::Texture TcaisseOK;
-	if (!Tobjectif.loadFromFile("image/caisse_OK.png"))
+	if (!Tobjectif.loadFromFile("image/caisse_ok.jpg"))
 	{
-		cout << "L'image de l'caisseOK n'a pas chargé";
+		cout << "L'image de l'caisse_ok n'a pas chargé";
 
 	}
 	caisseOK.setTexture(TcaisseOK);
@@ -73,23 +72,23 @@ void editeur(sf::RenderWindow* window)
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
-			sf::Sprite objetActuel;
+			sf::Sprite objetSelectionner;
 
 			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
 			{
-				objetActuel.setTexture(Tmur);
+				objetSelectionner.setTexture(Tmur);
 			}
 			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
 			{
-				objetActuel.setTexture(Tcaisse);
+				objetSelectionner.setTexture(Tcaisse);
 			}
 			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
 			{
-				objetActuel.setTexture(Tobjectif);
+				objetSelectionner.setTexture(Tobjectif);
 			}
 			if (event.type == sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad4))
 			{
-				objetActuel.setTexture(Tmario);
+				objetSelectionner.setTexture(Tmario);
 			}
 
 			
@@ -114,19 +113,22 @@ void editeur(sf::RenderWindow* window)
 		sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
 		sf::FloatRect Position;
 		for (int ligne = 0; ligne < NB_BLOCS_LARGEUR; ligne++) {
-			for (int colonne = 0; colonne < NB_BLOCS_HAUTEUR; colonne++) 
+			for (int colonne = 0; colonne < NB_BLOCS_HAUTEUR; colonne++)
 			{
 				int x = mousePosition.x / TAILLE_BLOC;
 				int y = mousePosition.y / TAILLE_BLOC;
 				Position.top = colonne * TAILLE_BLOC;
 				Position.left = ligne * TAILLE_BLOC;
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) 
+				if (event.type == sf::Mouse::isButtonPressed(sf::Mouse::Right))
 				{
 					carte[x][y] = objetActuel;
 				}
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-					carte[x][y] = vide;
+					sf::Sprite objetSelectionner;
+
+					objetSelectionner.setTexture(Tvide);
+					carte[x][y] = objetActuel;
 				}
 				sf::Sprite* sprite = TotalSprite[carte[ligne][colonne]];
 				sprite->setPosition(Position.left, Position.top);
@@ -145,6 +147,5 @@ void editeur(sf::RenderWindow* window)
 
 		window->display();
 	}
-	
 
 }
